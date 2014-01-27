@@ -393,7 +393,7 @@ class Facet implements \IteratorAggregate, \Countable, DataSourceInterface
      */
     public function setSelect($select)
     {
-        $this->_set_select = '@groupby, @count, ' . $select;
+        $this->_set_select = $select;
     }
 
     /**
