@@ -196,7 +196,7 @@ class Facet implements \IteratorAggregate, \Countable, DataSourceInterface
 
         $this->_set_select = isset($options['set_select']) ?
             $options['set_select'] :
-            $this->_name;
+            $this->_attr;
 
         $this->_sph_field = isset($options['sph_field']) ?
             $options['sph_field'] :
