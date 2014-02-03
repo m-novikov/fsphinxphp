@@ -448,6 +448,8 @@ class Facet implements \IteratorAggregate, \Countable, DataSourceInterface
             $query = $sphinx->parse($query);
         }
 
+        $query->toggleOffAttr($this->getAttribute());
+
         $max_num_values = $this->_max_num_values;
         if ($this->_augment) {
             $max_num_values += $query->countField($this->_sph_field);

@@ -21,6 +21,11 @@ class MultiFieldQuery implements \IteratorAggregate, \Countable
     private $_qts;
 
     /**
+     * @var array Mapping between QueryTerm objects and attribute fields
+     */
+    private $_qt_attrs;
+
+    /**
      * @var string Stores the raw query string.
      */
     private $_raw;
@@ -101,7 +106,9 @@ class MultiFieldQuery implements \IteratorAggregate, \Countable
      */
     protected function addQueryTerm(QueryTerm $query_term)
     {
-        $this->_qts[$query_term->toHash()] = $query_term;
+        $hash = $query_term->toHash();
+        $this->_qts[$hash] = $query_term;
+        $this->_qt_attrs[$query_term->getAttribute()][] = &$this->_qts[$hash];
     }
 
     /**
@@ -123,6 +130,16 @@ class MultiFieldQuery implements \IteratorAggregate, \Countable
         }
 
         return null;
+    }
+
+
+    public function toggleOffAttr($attr)
+    {
+        if (is_string($attr) && is_array($this->_qt_attrs[$attr])) {
+            foreach ($this->_qt_attrs[$attr] as &$qt) {
+                $qt->setStatus('-');
+            }
+        }
     }
 
     /**
