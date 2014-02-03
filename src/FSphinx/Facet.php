@@ -512,7 +512,10 @@ class Facet implements \IteratorAggregate, \Countable, DataSourceInterface
         // internal data source always overrides external data source
         if ($this->_datasource) {
             $datasource = $this->_datasource;
+        } else {
+            $this->setSource();
         }
+
 
         // fetch string terms if data source attached and configured
         if ($datasource && $this->_source) {
