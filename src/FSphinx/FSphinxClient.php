@@ -84,8 +84,12 @@ class FSphinxClient extends SphinxClient implements DataSourceInterface
      */
     public function attachFacets($facets)
     {
-        $facets = func_get_args();
-        $this->facets = new FacetGroup($facets);
+        if (func_num_args() == 1 and $facets instanceof FacetGroup) {
+            $this->facets = $facets;
+        } else {
+            $facets = func_get_args();
+            $this->facets = new FacetGroup($facets);
+        }
         $this->facets->attachSphinxClient($this);
     }
 
